@@ -18,7 +18,7 @@ public class RepositorioProdutoArrayList {
 	 * enquanto com o uso de generics em ArrayList.
 	 */
 	private ArrayList produtos;
- 
+  
 	/**
 	 * A posicao do ultimo elemento inserido no array de produtos. o valor inicial é
 	 * -1 para indicar que nenhum produto foi ainda guardado no array.
@@ -84,7 +84,7 @@ public class RepositorioProdutoArrayList {
 			produtos.add(indice, produto);
 		}
 		else {
-			throw new IllegalArgumentException("Produto nao armazenado");
+			throw new RuntimeException("Produto nao armazenado");
 		}
 	}
 
@@ -100,7 +100,7 @@ public class RepositorioProdutoArrayList {
 			produtos.remove(indice);
 		}
 		else {
-			throw new IllegalArgumentException("Produto nao armazenado");
+			throw new RuntimeException("Produto nao armazenado");
 		}
 	}
 

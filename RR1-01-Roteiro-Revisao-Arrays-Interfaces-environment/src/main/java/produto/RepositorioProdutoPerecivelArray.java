@@ -39,7 +39,7 @@ public class RepositorioProdutoPerecivelArray {
 	 * estruturas internas podem nao precisar desse método.
 	 * 
 	 * @param codigo
-	 * @return
+	 * @return 
 	 */
 	private int procurarIndice(int codigo) {
 		int retorno = -1;
@@ -94,7 +94,7 @@ public class RepositorioProdutoPerecivelArray {
 		if (indice != -1) {
 			produtos[indice] = produto;
 		} else {
-			throw new IllegalArgumentException("Produto nao armazenado");
+			throw new RuntimeException("Produto nao armazenado");
 		}
 	}
 
@@ -116,7 +116,7 @@ public class RepositorioProdutoPerecivelArray {
 			this.produtos = novoProdutos;
 		}
 		else {
-			throw new IllegalArgumentException("Produto nao armazenado");
+			throw new RuntimeException("Produto nao armazenado");
 		}
 	}
 
@@ -134,7 +134,7 @@ public class RepositorioProdutoPerecivelArray {
 			retorno = produtos[indice];
 		}
 		else {
-			throw new IllegalArgumentException("Produto nao armazenado");
+			throw new RuntimeException("Produto nao armazenado");
 		}
 		return retorno;
 	}
