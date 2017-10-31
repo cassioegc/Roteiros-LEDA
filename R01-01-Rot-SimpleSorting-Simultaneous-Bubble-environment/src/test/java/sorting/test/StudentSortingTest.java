@@ -8,7 +8,9 @@ import org.junit.Test;
 
 import sorting.AbstractSorting;
 import sorting.simpleSorting.BubbleSort;
+import sorting.simpleSorting.InsertionSort;
 import sorting.simpleSorting.SelectionSort;
+import sorting.variationsOfBubblesort.SimultaneousBubblesort;
 
 public class StudentSortingTest {
 
