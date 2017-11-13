@@ -36,7 +36,7 @@ public class FloorCeilBinarySearch implements FloorCeil {
 			int meio = (inicio + fim) / 2;
 			
 			if (array[array.length - 1] < x) {
-				retorno = array[array.length - 1];
+				retorno = null;
 			}
 			else if (array[0] > x) {
 				retorno = array[0];
