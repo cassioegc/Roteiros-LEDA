@@ -1,7 +1,5 @@
 package adt.queue;
 
-import java.util.Arrays;
-
 public class QueueImpl<T> implements Queue<T> {
 
 	private T[] array;
@@ -17,7 +15,7 @@ public class QueueImpl<T> implements Queue<T> {
 	public T head() {
 		T element = null;
 		if (!isEmpty()) {
-			element = array[tail];
+			element = array[0];
 		}
 		return element;
 	}
@@ -64,21 +62,4 @@ public class QueueImpl<T> implements Queue<T> {
 		}
 		return element;
 	}
-	//===========================================================
-	public String toString() {
-		return Arrays.toString(array);
-	}
-	
-	public static void main(String[] args) throws QueueOverflowException, QueueUnderflowException {
-		QueueImpl<Integer> q = new QueueImpl<>(3);
-		q.enqueue(2);
-		q.enqueue(5);
-		q.enqueue(8);
-		System.out.println(q.toString() + " " + q.isFull() );
-		System.out.println(q.dequeue());
-		System.out.println(q.toString());
-		System.out.println(q.isFull());
-		
-	}
-
 }
