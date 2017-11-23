@@ -64,7 +64,7 @@ public class CircularQueue<T> implements Queue<T> {
 
    @Override
    public boolean isFull() {
-      return (this.tail + 1) % array.length == this.head;
+      return this.elements == this.array.length;
    }
 
 }
