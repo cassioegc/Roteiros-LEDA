@@ -61,8 +61,8 @@ public class HashtableClosedAddressImpl<T> extends AbstractHashtableClosedAddres
    @Override
    public void insert(T element) {
       if (element != null) {
-         int hash = hash(element);
-         LinkedList<T> list = (LinkedList<T>) this.table[hash];
+         int hash = this.hash(element);
+         LinkedList<T> list = this.list(hash);
          if (list == null) {
             list = new LinkedList<>();
             list.add(element);
@@ -74,8 +74,8 @@ public class HashtableClosedAddressImpl<T> extends AbstractHashtableClosedAddres
                list.remove(index);
                list.add(index, element);
             } else {
-               list.add(element);
                this.elements += 1;
+               list.add(element);
             }
             this.COLLISIONS += 1;
          }
@@ -85,9 +85,12 @@ public class HashtableClosedAddressImpl<T> extends AbstractHashtableClosedAddres
    @Override
    public void remove(T element) {
       if (element != null) {
-         int hash = hash(element);
-         LinkedList<T> list = (LinkedList<T>) this.table[hash];
+         int hash = this.hash(element);
+         LinkedList<T> list = this.list(hash);
          if (list != null && list.contains(element)) {
+        	 if (list.size() > 1) {
+        		 this.COLLISIONS -= 1;
+        	 }
             list.remove(element);
             this.elements -= 1;
          }
@@ -99,8 +102,8 @@ public class HashtableClosedAddressImpl<T> extends AbstractHashtableClosedAddres
    public T search(T element) {
       T result = null;
       if (element != null) {
-         int hash = hash(element);
-         LinkedList<T> list = (LinkedList<T>) this.table[hash];
+         int hash = this.hash(element);
+         LinkedList<T> list = this.list(hash);
          if (list != null) {
             result = list.get(list.indexOf(element));
          }
@@ -112,8 +115,8 @@ public class HashtableClosedAddressImpl<T> extends AbstractHashtableClosedAddres
    public int indexOf(T element) {
       int result = -1;
       if (element != null) {
-         int hash = hash(element);
-         LinkedList<T> list = (LinkedList<T>) this.table[hash];
+         int hash = this.hash(element);
+         LinkedList<T> list = this.list(hash);
          if (list != null && list.contains(element)) {
             result = hash;
          }
@@ -123,5 +126,9 @@ public class HashtableClosedAddressImpl<T> extends AbstractHashtableClosedAddres
 
    private int hash(T element) {
       return ((HashFunctionClosedAddress) this.getHashFunction()).hash(element);
+   }
+   
+   private LinkedList<T> list(int hash) {
+	   return (LinkedList<T>) this.table[hash];
    }
 }
