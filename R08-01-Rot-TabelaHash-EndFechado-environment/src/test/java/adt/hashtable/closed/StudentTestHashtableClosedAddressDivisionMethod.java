@@ -85,4 +85,10 @@ public class StudentTestHashtableClosedAddressDivisionMethod {
 	public void testSize() {
 		assertEquals(80, table1.size());
 	}
+	
+	@Test
+	public void testSize2() {
+		table1.insert(210);
+		assertEquals(80, table1.size());
+	}
 }
