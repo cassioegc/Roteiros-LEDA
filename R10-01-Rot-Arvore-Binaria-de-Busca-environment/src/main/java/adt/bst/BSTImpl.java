@@ -146,8 +146,45 @@ public class BSTImpl<T extends Comparable<T>> implements BST<T> {
 
 	@Override
 	public void remove(T element) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented yet!");
+		BSTNode<T> node = search(element);
+		if (node != null && !node.isEmpty()) {
+			if (node.isLeaf()) {
+
+			} else if (children(node) == 1) {
+				if (!node.equals(this.root)) {
+					if (node.getParent().getLeft().equals(node)) {
+						if (!node.getLeft().isEmpty()) {
+							node.getParent().setLeft(node.getLeft());
+						} else {
+							node.getParent().setLeft(node.getRight());
+						}
+					} else {
+						if (!node.getLeft().isEmpty()) {
+							node.getParent().setRight(node.getLeft());
+						} else {
+							node.getParent().setRight(node.getRight());
+						}
+					}
+				} else {
+					
+				}
+			}
+		} else {
+			BSTNode<T> sucessor = sucessor(node.getData());
+			remove(sucessor.getData());
+			node.setData(sucessor.getData());
+		}
+	}
+
+	private int children(BSTNode<T> node) {
+		int result = 0;
+		if (!node.getLeft().isEmpty() && !node.getRight().isEmpty()) {
+			result = 2;
+		} else if ((node.getLeft().isEmpty() && !node.getRight().isEmpty())
+				|| (!node.getLeft().isEmpty() && node.getRight().isEmpty())) {
+			result = 1;
+		}
+		return result;
 	}
 
 	@Override
@@ -170,9 +207,7 @@ public class BSTImpl<T extends Comparable<T>> implements BST<T> {
 		ArrayList<Comparable> array = new ArrayList<Comparable>();
 		order(array, this.root);
 		return (T[]) array.toArray(new Comparable[size()]);
-		
-		
-		
+
 	}
 
 	private void order(ArrayList<Comparable> array, BSTNode<T> node) {
@@ -182,6 +217,7 @@ public class BSTImpl<T extends Comparable<T>> implements BST<T> {
 			order(array, (BSTNode<T>) node.getRight());
 		}
 	}
+
 	@Override
 	public T[] postOrder() {
 		ArrayList<Comparable> array = new ArrayList<Comparable>();
@@ -214,5 +250,4 @@ public class BSTImpl<T extends Comparable<T>> implements BST<T> {
 		}
 		return result;
 	}
-
 }
