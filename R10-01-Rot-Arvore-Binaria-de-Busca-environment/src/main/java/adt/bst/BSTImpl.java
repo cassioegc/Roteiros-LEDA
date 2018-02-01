@@ -30,11 +30,7 @@ public class BSTImpl<T extends Comparable<T>> implements BST<T> {
 			int left = height((BSTNode<T>) node.getLeft());
 			int right = height((BSTNode<T>) node.getRight());
 
-			if (left > right) {
-				result = left + 1;
-			} else {
-				result = right + 1;
-			}
+			result = Math.max(left, right) + 1;
 		}
 		return result;
 	}
@@ -182,7 +178,8 @@ public class BSTImpl<T extends Comparable<T>> implements BST<T> {
 					remove(newData);
 					this.root.setData(newData);
 				}
-			} else {
+			} 
+			else {
 				BSTNode<T> sucessor = sucessor(node.getData());
 				T newData = sucessor.getData();
 				remove(sucessor.getData());
