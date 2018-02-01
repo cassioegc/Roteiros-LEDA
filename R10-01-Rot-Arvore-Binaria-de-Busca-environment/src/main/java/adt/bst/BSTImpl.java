@@ -149,34 +149,49 @@ public class BSTImpl<T extends Comparable<T>> implements BST<T> {
 		BSTNode<T> node = search(element);
 		if (node != null && !node.isEmpty()) {
 			if (node.isLeaf()) {
-
-			} else if (children(node) == 1) {
+				node.setData(null);
+				node.setLeft(null);
+				node.setRight(null);
+				node.setParent(null);
+			} else if (numberOfChildren(node) == 1) {
 				if (!node.equals(this.root)) {
 					if (node.getParent().getLeft().equals(node)) {
 						if (!node.getLeft().isEmpty()) {
 							node.getParent().setLeft(node.getLeft());
+							node.getLeft().setParent(node.getParent());
 						} else {
 							node.getParent().setLeft(node.getRight());
+							node.getRight().setParent(node.getParent());
 						}
 					} else {
 						if (!node.getLeft().isEmpty()) {
 							node.getParent().setRight(node.getLeft());
+							node.getLeft().setParent(node.getParent());
 						} else {
 							node.getParent().setRight(node.getRight());
+							node.getRight().setParent(node.getParent());
 						}
 					}
 				} else {
-					
+					T newData = null;
+					if (!node.getLeft().isEmpty()) {
+						newData = treeMaximum((BSTNode<T>) node.getLeft()).getData();
+					} else {
+						newData = treeMinimum((BSTNode<T>) node.getRight()).getData();
+					}
+					remove(newData);
+					this.root.setData(newData);
 				}
+			} else {
+				BSTNode<T> sucessor = sucessor(node.getData());
+				T newData = sucessor.getData();
+				remove(sucessor.getData());
+				node.setData(newData);
 			}
-		} else {
-			BSTNode<T> sucessor = sucessor(node.getData());
-			remove(sucessor.getData());
-			node.setData(sucessor.getData());
 		}
 	}
 
-	private int children(BSTNode<T> node) {
+	private int numberOfChildren(BSTNode<T> node) {
 		int result = 0;
 		if (!node.getLeft().isEmpty() && !node.getRight().isEmpty()) {
 			result = 2;
@@ -234,8 +249,8 @@ public class BSTImpl<T extends Comparable<T>> implements BST<T> {
 	}
 
 	/**
-	 * This method is already implemented using recursion. You must understand
-	 * how it work and use similar idea with the other methods.
+	 * This method is already implemented using recursion. You must understand how
+	 * it work and use similar idea with the other methods.
 	 */
 	@Override
 	public int size() {

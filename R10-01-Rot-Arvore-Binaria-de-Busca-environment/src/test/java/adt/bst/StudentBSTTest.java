@@ -126,10 +126,9 @@ public class StudentBSTTest {
 	@Test
 	public void testRemove() {
 		fillTree(); // -40 -34 0 2 5 6 9 12 23 67 76 232
-
+		
 		Integer[] order = { -40, -34, 0, 2, 5, 6, 9, 12, 23, 67, 76, 232 };
 		assertArrayEquals(order, tree.order());
-
 		tree.remove(6);
 		order = new Integer[] { -40, -34, 0, 2, 5, 9, 12, 23, 67, 76, 232 };
 		assertArrayEquals(order, tree.order());
