@@ -31,11 +31,20 @@ public class StudentMaxHeapTest {
 		};
 		heap = new HeapImpl<Integer>(comparator);
 	}
+	
+	@Test
+	public void testBuild2() {
+		Integer[] a = new Integer[] { 82, 6, 99, 12, 34, 64, 58, 1};
+		for(Integer e: a) {
+			heap.insert(e);
+		}
+		heap.buildHeap(new Integer[] { 82, 6, 99, 12, 34, 64, 58, 1});
+	}
 
 	@Test
 	public void testBuild() {
 		heap.buildHeap(new Integer[] { 82, 6, 99, 12, 34, 64, 58, 1 });
-
+		
 		assertEquals(8, heap.size());
 		assertFalse(heap.isEmpty());
 

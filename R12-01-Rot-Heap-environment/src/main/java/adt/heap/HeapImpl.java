@@ -72,9 +72,7 @@ public class HeapImpl<T extends Comparable<T>> implements Heap<T> {
 	public T[] toArray() {
 		ArrayList<T> resp = new ArrayList<T>();
 		for (int i = 0; i <= this.index; i++) {
-			if (this.heap[i] != null) {
-				resp.add(this.heap[i]);
-			}
+			resp.add(this.heap[i]);
 		}
 		return (T[]) resp.toArray(new Comparable[0]);
 	}
@@ -130,8 +128,18 @@ public class HeapImpl<T extends Comparable<T>> implements Heap<T> {
 
 	@Override
 	public void buildHeap(T[] array) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented yet!");
+		this.clear();
+		this.heap = array;
+		this.index = array.length - 1;
+		for(int i = this.parent(this.index); i >= 0; i--) {
+			this.heapify(i);
+		}
+	}
+	
+	private void clear() {
+		while(!this.isEmpty()) {
+			this.extractRootElement();
+		}
 	}
 
 	@Override
@@ -157,7 +165,11 @@ public class HeapImpl<T extends Comparable<T>> implements Heap<T> {
 
 	@Override
 	public T[] heapsort(T[] array) {
-
+		this.clear();
+		for (T elem : array) {
+			this.insert(elem);
+		}
+		return array;
 	}
 
 	@Override
