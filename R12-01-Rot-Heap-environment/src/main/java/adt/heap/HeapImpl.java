@@ -2,8 +2,6 @@ package adt.heap;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 
 import util.Util;
@@ -22,10 +20,10 @@ public class HeapImpl<T extends Comparable<T>> implements Heap<T> {
 	protected T[] heap;
 	protected int index = -1;
 	/**
-	 * O comparador é utilizado para fazer as comparações da heap. O ideal é
-	 * mudar apenas o comparator e mandar reordenar a heap usando esse
-	 * comparator. Assim os metodos da heap não precisam saber se vai funcionar
-	 * como max-heap ou min-heap.
+	 * O comparador é utilizado para fazer as comparações da heap. O ideal é mudar
+	 * apenas o comparator e mandar reordenar a heap usando esse comparator. Assim
+	 * os metodos da heap não precisam saber se vai funcionar como max-heap ou
+	 * min-heap.
 	 */
 	protected Comparator<T> comparator;
 
@@ -33,8 +31,7 @@ public class HeapImpl<T extends Comparable<T>> implements Heap<T> {
 	private static final int INCREASING_FACTOR = 10;
 
 	/**
-	 * Construtor da classe. Note que de inicio a heap funciona como uma
-	 * min-heap.
+	 * Construtor da classe. Note que de inicio a heap funciona como uma min-heap.
 	 */
 	@SuppressWarnings("unchecked")
 	public HeapImpl(Comparator<T> comparator) {
@@ -48,16 +45,16 @@ public class HeapImpl<T extends Comparable<T>> implements Heap<T> {
 	}
 
 	/**
-	 * Deve retornar o indice que representa o filho a esquerda do elemento
-	 * indexado pela posicao i no vetor
+	 * Deve retornar o indice que representa o filho a esquerda do elemento indexado
+	 * pela posicao i no vetor
 	 */
 	private int left(int i) {
 		return (i * 2 + 1);
 	}
 
 	/**
-	 * Deve retornar o indice que representa o filho a direita do elemento
-	 * indexado pela posicao i no vetor
+	 * Deve retornar o indice que representa o filho a direita do elemento indexado
+	 * pela posicao i no vetor
 	 */
 	private int right(int i) {
 		return (i * 2 + 1) + 1;
@@ -79,8 +76,8 @@ public class HeapImpl<T extends Comparable<T>> implements Heap<T> {
 
 	// ///////////// METODOS A IMPLEMENTAR
 	/**
-	 * Valida o invariante de uma heap a partir de determinada posicao, que pode
-	 * ser a raiz da heap ou de uma sub-heap. O heapify deve colocar os maiores
+	 * Valida o invariante de uma heap a partir de determinada posicao, que pode ser
+	 * a raiz da heap ou de uma sub-heap. O heapify deve colocar os maiores
 	 * (comparados usando o comparator) elementos na parte de cima da heap.
 	 */
 	private void heapify(int position) {
@@ -131,13 +128,13 @@ public class HeapImpl<T extends Comparable<T>> implements Heap<T> {
 		this.clear();
 		this.heap = array;
 		this.index = array.length - 1;
-		for(int i = this.parent(this.index); i >= 0; i--) {
+		for (int i = Math.floorDiv(this.index, 2); i >= 0; i--) {
 			this.heapify(i);
 		}
 	}
-	
+
 	private void clear() {
-		while(!this.isEmpty()) {
+		while (!this.isEmpty()) {
 			this.extractRootElement();
 		}
 	}
@@ -165,11 +162,23 @@ public class HeapImpl<T extends Comparable<T>> implements Heap<T> {
 
 	@Override
 	public T[] heapsort(T[] array) {
-		this.clear();
-		for (T elem : array) {
-			this.insert(elem);
+		Comparator<T> newComparator = new Comparator<T>() {
+
+			@Override
+			public int compare(T o1, T o2) {
+				return o2.compareTo(o1);
+			}
+
+		};
+		Comparator<T> old = this.comparator;
+		this.comparator = newComparator;
+		this.buildHeap(array);
+		T[] sorted = (T[]) new Comparable[size()];
+		for (int i = 0; i < sorted.length; i++) {
+			sorted[i] = this.extractRootElement();
 		}
-		return array;
+		this.comparator = old;
+		return sorted;
 	}
 
 	@Override
