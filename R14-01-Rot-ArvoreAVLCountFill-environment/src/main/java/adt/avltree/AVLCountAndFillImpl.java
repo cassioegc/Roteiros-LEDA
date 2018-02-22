@@ -81,15 +81,6 @@ public class AVLCountAndFillImpl<T extends Comparable<T>> extends AVLTreeImpl<T>
 	public int RLcount() {
 		return RLcounter;
 	}
-
-	private void criaListdeadd(T[] array, ArrayList<T> aux, int i, int f) {
-		if (i < f && i >= 0 && f < array.length && f > 0) {
-			int medium = (i + f) / 2;
-			aux.add(array[medium]);
-			criaListdeadd(array, aux, 0, medium);
-			criaListdeadd(array, aux, medium + 1, f);
-		}
-	}
 	
 	private void removeDouble(List<T> array) {
 		for (int i = 0; i < array.size(); i++) {
@@ -111,7 +102,7 @@ public class AVLCountAndFillImpl<T extends Comparable<T>> extends AVLTreeImpl<T>
 			Collections.sort(all);
 			removeDouble(all);
 			this.root = new BSTNode<T>();
-			T[] add = this.addAll((T[]) all.toArray(new Comparable[all.size()]));
+			T[] add = this.getArrayInsert((T[]) all.toArray(new Comparable[all.size()]));
 			for (int i = 0; i < add.length; i++) {
 				this.insert(add[i]);
 			}
@@ -128,7 +119,7 @@ public class AVLCountAndFillImpl<T extends Comparable<T>> extends AVLTreeImpl<T>
 		return temp;
 	}
 
-	private T[] addAll(T[] array) {
+	private T[] getArrayInsert(T[] array) {
 		ArrayList<ArrayList<T>> matriz = new ArrayList<>();
 		T[] aux = (T[]) new Comparable[array.length];
 		matriz.add(new ArrayList<T>(Arrays.asList(array)));
