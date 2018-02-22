@@ -90,25 +90,36 @@ public class AVLCountAndFillImpl<T extends Comparable<T>> extends AVLTreeImpl<T>
 			criaListdeadd(array, aux, medium + 1, f);
 		}
 	}
-
-	private void clear() {
-		while (!this.isEmpty()) {
-			this.remove(this.root.getData());
+	
+	private void removeDouble(List<T> array) {
+		for (int i = 0; i < array.size(); i++) {
+			for (int j = i + 1; j < array.size(); j++) {
+				if (array.get(i).equals(array.get(j))) {
+					array.remove(array.get(j));
+				}
+			}
 		}
 	}
-
+ 
 	@Override
 	public void fillWithoutRebalance(T[] array) {
-		T[] preOrder = this.preOrder();
-		List<T> all = new ArrayList<>();
-		Collections.addAll(all, array);
-		Collections.addAll(all, preOrder);
-		this.clear();
-		this.addAll(array);
+		if (array != null) {
+			T[] preOrder = this.preOrder();
+			List<T> all = new ArrayList<>();
+			Collections.addAll(all, array);
+			Collections.addAll(all, preOrder);
+			Collections.sort(all);
+			removeDouble(all);
+			this.root = new BSTNode<T>();
+			T[] add = this.addAll((T[]) all.toArray(new Comparable[all.size()]));
+			for (int i = 0; i < add.length; i++) {
+				this.insert(add[i]);
+			}
+		}
 
 	}
 
-	private ArrayList<T> newArray(ArrayList<T> array, int a, int f) {
+	private ArrayList<T> newArrayList(ArrayList<T> array, int a, int f) {
 		ArrayList<T> temp = new ArrayList<>();
 
 		for (int i = a; i < f; i++) {
@@ -125,8 +136,8 @@ public class AVLCountAndFillImpl<T extends Comparable<T>> extends AVLTreeImpl<T>
 		while (i < array.length) {
 			int meio = matriz.get(i).size() / 2;
 			aux[i] = matriz.get(i).get(meio);
-			matriz.add(newArray(matriz.get(i), 0, meio));
-			matriz.add(newArray(matriz.get(i), meio + 1, matriz.get(i).size()));
+			matriz.add(newArrayList(matriz.get(i), 0, meio));
+			matriz.add(newArrayList(matriz.get(i), meio + 1, matriz.get(i).size()));
 			i++;
 		}
 		return aux;
