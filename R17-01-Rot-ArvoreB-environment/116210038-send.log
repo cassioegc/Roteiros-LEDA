@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2018-03-05T14:04:17.597-0300</date>
+  <logger>CASSIO EDUARDO GABRIEL CORDEIRO</logger>
+  <level>FINE</level>
+  <message>File 116210038-CASSIO EDUARDO GABRIEL CORDEIRO.zip was received. It was sent by CASSIO EDUARDO GABRIEL CORDEIRO from IP 192.168.0.111</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2018-03-05T18:55:47.036-0300</date>
+  <logger>CASSIO EDUARDO GABRIEL CORDEIRO</logger>
+  <level>FINE</level>
+  <message>File 116210038-CASSIO EDUARDO GABRIEL CORDEIRO.zip was received. It was sent by CASSIO EDUARDO GABRIEL CORDEIRO from IP 192.168.0.111</message>
+</record>
