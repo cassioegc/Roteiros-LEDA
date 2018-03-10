@@ -172,8 +172,10 @@ public class HeapImpl<T extends Comparable<T>> implements Heap<T> {
 		};
 		Comparator<T> old = this.comparator;
 		this.comparator = newComparator;
+		this.index = -1;
 		this.buildHeap(array);
 		T[] sorted = (T[]) new Comparable[size()];
+		
 		for (int i = 0; i < sorted.length; i++) {
 			sorted[i] = this.extractRootElement();
 		}
