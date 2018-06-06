@@ -42,44 +42,35 @@ public class AVLTreeImpl<T extends Comparable<T>> extends BSTImpl<T> implements 
 				node.setData(null);
 				node.setLeft(null);
 				node.setRight(null);
-			} else if (super.numberOfChildren(node) == 1) {
-				if (!node.equals(this.root)) {
-					if (node.getParent().getLeft().equals(node)) {
-						if (!node.getLeft().isEmpty()) {
-							node.getParent().setLeft(node.getLeft());
-							node.getLeft().setParent(node.getParent());
-						} else {
-							node.getParent().setLeft(node.getRight());
-							node.getRight().setParent(node.getParent());
-						}
-					} else {
-						if (!node.getLeft().isEmpty()) {
-							node.getParent().setRight(node.getLeft());
-							node.getLeft().setParent(node.getParent());
-						} else {
-							node.getParent().setRight(node.getRight());
-							node.getRight().setParent(node.getParent());
-						}
-					}
-				} else {
-					T newData = null;
-					if (!node.getLeft().isEmpty()) {
-						newData = super.treeMaximum((BSTNode<T>) node.getLeft()).getData();
-					} else {
-						newData = super.treeMinimum((BSTNode<T>) node.getRight()).getData();
-					}
-					remove(newData);
-					this.root.setData(newData);
-				}
-			} else {
-				BSTNode<T> sucessor = sucessor(node.getData());
-				T newData = sucessor.getData();
-				remove(sucessor.getData());
-				node.setData(newData);
-			}
-			if (node.isEmpty()) {
 				this.rebalanceUp((BSTNode<T>) node.getParent());
+			}
+			else if (numberOfChildren(node) == 1) {
+				BSTNode<T> aux = null;
+				if (!node.getLeft().isEmpty() && node.getRight().isEmpty()) {
+					if (node.getParent().getLeft() != null && node.getParent().getLeft().equals(node)) {
+						node.getParent().setLeft(node.getLeft());
+					} else {
+						node.getParent().setRight(node.getLeft());
+					}
+					node.getLeft().setParent(node.getParent());
+					aux = (BSTNode<T>) node.getLeft();
+				} else {
+					if (node.getParent().getRight() != null && node.getParent().getRight().equals(node)) {
+						node.getParent().setRight(node.getRight());
+					} else {
+						node.getParent().setLeft(node.getRight());
+					}
+					node.getRight().setParent(node.getParent());
+					aux = (BSTNode<T>) node.getRight();
+				}
+				if (node.equals(this.getRoot())) {
+					this.root = aux;
+				}
+				this.rebalanceUp(node);
 			} else {
+				T newData = this.treeMinimum((BSTNode<T>) node.getRight()).getData();
+				this.remove(newData);
+				node.setData(newData);
 				this.rebalanceUp(node);
 			}
 		}

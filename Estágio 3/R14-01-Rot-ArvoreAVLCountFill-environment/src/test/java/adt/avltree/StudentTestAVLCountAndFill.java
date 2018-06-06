@@ -69,7 +69,6 @@ public class StudentTestAVLCountAndFill {
 	
 	@Test
 	public void test2() {
-		System.out.println(tree1.LLcount() + " " + tree1.RRcount() + " " + tree1.RLcount() + " " + tree1.LRcount());
 		Integer[] keys = { 8, 4, 12, 2, 6, 10, 14, 1, 3, 5, 7, 9, 11, 13 };
 		tree1.fillWithoutRebalance(keys);
 		

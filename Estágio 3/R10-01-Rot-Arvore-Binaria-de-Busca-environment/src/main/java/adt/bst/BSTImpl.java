@@ -143,46 +143,37 @@ public class BSTImpl<T extends Comparable<T>> implements BST<T> {
 	@Override
 	public void remove(T element) {
 		BSTNode<T> node = search(element);
-		if (node != null && !node.isEmpty()) {
+		if (node != null) {
 			if (node.isLeaf()) {
 				node.setData(null);
 				node.setLeft(null);
 				node.setRight(null);
-				node.setParent(null);
-			} else if (numberOfChildren(node) == 1) {
-				if (!node.equals(this.root)) {
-					if (node.getParent().getLeft().equals(node)) {
-						if (!node.getLeft().isEmpty()) {
-							node.getParent().setLeft(node.getLeft());
-							node.getLeft().setParent(node.getParent());
-						} else {
-							node.getParent().setLeft(node.getRight());
-							node.getRight().setParent(node.getParent());
-						}
+			}
+			else if (numberOfChildren(node) == 1) {
+				BSTNode<T> aux = null;
+				if (!node.getLeft().isEmpty() && node.getRight().isEmpty()) {
+					if (node.getParent().getLeft() != null && node.getParent().getLeft().equals(node)) {
+						node.getParent().setLeft(node.getLeft());
 					} else {
-						if (!node.getLeft().isEmpty()) {
-							node.getParent().setRight(node.getLeft());
-							node.getLeft().setParent(node.getParent());
-						} else {
-							node.getParent().setRight(node.getRight());
-							node.getRight().setParent(node.getParent());
-						}
+						node.getParent().setRight(node.getLeft());
 					}
+					node.getLeft().setParent(node.getParent());
+					aux = (BSTNode<T>) node.getLeft();
 				} else {
-					T newData = null;
-					if (!node.getLeft().isEmpty()) {
-						newData = treeMaximum((BSTNode<T>) node.getLeft()).getData();
+					if (node.getParent().getRight() != null && node.getParent().getRight().equals(node)) {
+						node.getParent().setRight(node.getRight());
 					} else {
-						newData = treeMinimum((BSTNode<T>) node.getRight()).getData();
+						node.getParent().setLeft(node.getRight());
 					}
-					remove(newData);
-					this.root.setData(newData);
+					node.getRight().setParent(node.getParent());
+					aux = (BSTNode<T>) node.getRight();
 				}
-			} 
-			else {
-				BSTNode<T> sucessor = sucessor(node.getData());
-				T newData = sucessor.getData();
-				remove(sucessor.getData());
+				if (node.equals(this.getRoot())) {
+					this.root = aux;
+				}
+			} else {
+				T newData = this.treeMinimum((BSTNode<T>) node.getRight()).getData();
+				this.remove(newData);
 				node.setData(newData);
 			}
 		}
