@@ -30,7 +30,6 @@ public class SkipListImpl<T> implements SkipList<T> {
 
 	@Override
 	public void insert(int key, T newValue, int height) {
-		if (newValue != null && height > 0 && height <= this.maxHeight) {
 			SkipListNode<T> aux = this.search(key);
 			if (aux != null) {
 				aux.setValue(newValue);
@@ -45,8 +44,6 @@ public class SkipListImpl<T> implements SkipList<T> {
 					root.getForward()[i] = insert;
 					insert.getForward()[i] = aux2;
 				}
-
-			}
 		}
 	}
 
